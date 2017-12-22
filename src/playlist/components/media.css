@@ -1,0 +1,31 @@
+.media {
+  cursor: pointer;
+  margin-right: 15px;
+  display: inline-block;
+  width: 260px;
+  vertical-align: top;
+}
+.media:hover .media-cover {
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+
+.media-cover {
+  transition: .3s;
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  height: 160px;
+}
+
+.media-image {
+  object-fit: cover;
+}
+
+.media-title {
+  margin: 5px 0 0 0;
+  color: #44546b;
+  white-space: normal;
+}
+
+.media-author {
+  font-size: 12px;
+  margin: 5px 0 0 0;
+}
