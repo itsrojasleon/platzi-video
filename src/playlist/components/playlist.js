@@ -9,7 +9,7 @@ const Playlist = (props) => {
         return <Media
           key={item.id}
           {...item}
-          handleClick={props.handleOpenModal}
+          openModal={props.handleOpenModal}
         />
       })}
     </div>

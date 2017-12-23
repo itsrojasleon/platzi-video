@@ -8,6 +8,7 @@ import VideoPlayerControls from '../components/video-player-controls'
 import ProgressBar from '../components/progress-bar'
 import Spinner from '../components/spinner'
 import Volume from '../components/volume'
+import FullScreen from '../components/full-screen'
 
 class VideoPlayer extends Component {
   state = {
@@ -50,14 +51,12 @@ class VideoPlayer extends Component {
     this.setState({ loading: false })
   }
 
-  // si el botón es clickeado
   handleResetVolume = () => {
     const lastValue = this.video.volume
     this.setState({ lastValue })
     if(this.video.volume !== 0) {
       this.video.volume = 0
       this.setState({ volume: this.video.volume })
-      console.log('aquí')
     }else {
       this.video.volume = this.state.lastValue
       this.setState({ volume: this.video.volume })
@@ -69,10 +68,24 @@ class VideoPlayer extends Component {
     this.setState({ volume: this.video.volume })
   }
 
+  handleFullScreenClick = event => {
+    if(!document.webkitIsFullScreen) {
+      this.player.webkitRequestFullscreen()
+    }else {
+      document.webkitExitFullscreen()
+    }
+  }
+
+  setRef = element => {
+    this.player = element
+  }
+
   render() {
     return (
-      <VideoPlayerLayout>
-        <Title title="Esto es un video chido" />
+      <VideoPlayerLayout
+        setRef={this.setRef}
+        >
+        <Title title={this.props.title} />
         <VideoPlayerControls>
           <PlayPause
             handleClick={this.tooglePlay}
@@ -92,6 +105,9 @@ class VideoPlayer extends Component {
             handleVolumeChange={this.handleVolumeChange}
             volume={this.state.volume}
           />
+          <FullScreen
+            handleFullScreenClick={this.handleFullScreenClick}
+          />
         </VideoPlayerControls>
         <Spinner active={this.state.loading} />
         <Video
@@ -101,7 +117,7 @@ class VideoPlayer extends Component {
           handleTimeUpdate={this.handleTimeUpdate}
           handleSeeking={this.handleSeeking}
           handleSeeked={this.handleSeeked}
-          src="http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+          src={this.props.src}
         />
       </VideoPlayerLayout>
     )
